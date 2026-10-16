@@ -1,21 +1,17 @@
 class Solution {
     fun buildArray(target: IntArray, n: Int): List<String> {
-        val stack = mutableListOf<String>()
-        val hashed = target.toHashSet()
+        val result = ArrayList<String>()
+        var cur = 1
 
-        for(i in 1..n){
-            if(i in hashed){
-                stack.add("Push")
-            }else {
-                stack.add("Push")
-                stack.add("Pop")
+        for (t in target) {
+            while (cur < t) {          // numbers skipped in target
+                result.add("Push")
+                result.add("Pop")
+                cur++
             }
-
-            if(i == target.last()){
-                break
-            }
+            result.add("Push")         // cur == t, keep it
+            cur++
         }
-
-        return stack.toList()
+        return result
     }
 }
