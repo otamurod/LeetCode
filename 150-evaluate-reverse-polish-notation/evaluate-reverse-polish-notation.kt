@@ -1,5 +1,5 @@
 class Solution {
-    var index = 0
+    private var index = 0
 
     fun evalRPN(tokens: Array<String>): Int {
         index = tokens.size - 1
