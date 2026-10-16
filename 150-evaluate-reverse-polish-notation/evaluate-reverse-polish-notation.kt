@@ -1,29 +1,27 @@
 class Solution {
+    var index = 0
+
     fun evalRPN(tokens: Array<String>): Int {
-        val stack = ArrayDeque<Int>()
+        index = tokens.size - 1
 
-        for (token in tokens) {
-            when (token) {
-                "+" -> stack.addLast(stack.removeLast() + stack.removeLast())
-                
-                "*" -> stack.addLast(stack.removeLast() * stack.removeLast())
+        return eval(tokens)
+    }
 
-                "-" -> {
-                    val b = stack.removeLast()
-                    val a = stack.removeLast()
-                    stack.addLast(a - b)
-                }
+    fun eval(tokens: Array<String>): Int {
+        val token = tokens[index--]
 
-                "/" -> {
-                    val b = stack.removeLast()
-                    val a = stack.removeLast()
-                    stack.addLast(a / b)
-                }
-
-                else -> stack.addLast(token.toInt())
-            }
+        if (token != "+" && token != "-" && token != "*" && token != "/") {
+            return token.toInt()
         }
 
-        return stack.last()
+        val right = eval(tokens)
+        val left = eval(tokens)
+
+        return when (token) {
+            "+" -> left + right
+            "-" -> left - right
+            "*" -> left * right
+            else -> left / right
+        }
     }
 }
